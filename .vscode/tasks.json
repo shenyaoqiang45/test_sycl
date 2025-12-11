@@ -1,0 +1,69 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake: Configure",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "\"\"C:/Program Files (x86)/Intel/oneAPI/setvars.bat\" && cmake -B ${workspaceFolder}/build -G \"Ninja\" -DCMAKE_CXX_COMPILER=icx -DCMAKE_BUILD_TYPE=Debug\""
+            ],
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/d", "/c"]
+                }
+            },
+            "problemMatcher": [],
+            "detail": "Configure CMake project with Ninja and icx compiler"
+        },
+        {
+            "label": "CMake: Build",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "\"\"C:/Program Files (x86)/Intel/oneAPI/setvars.bat\" && cmake --build ${workspaceFolder}/build --config Debug\""
+            ],
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/d", "/c"]
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile",
+                "$gcc"
+            ],
+            "detail": "Build the CMake project",
+            "dependsOn": ["CMake: Configure"]
+        },
+        {
+            "label": "CMake: Clean",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "if exist ${workspaceFolder}\\build rmdir /s /q ${workspaceFolder}\\build"
+            ],
+            "problemMatcher": [],
+            "detail": "Clean the build directory"
+        },
+        {
+            "label": "CMake: Rebuild",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "CMake: Clean",
+                "CMake: Build"
+            ],
+            "problemMatcher": [],
+            "detail": "Clean and rebuild the project"
+        }
+    ]
+}
