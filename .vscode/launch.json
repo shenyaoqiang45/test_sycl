@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug SYCL Test",
+            "name": "Debug SYCL Test (Debug Build)",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/simple_sycl_test.exe",
@@ -11,7 +11,19 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "console": "integratedTerminal",
-            "preLaunchTask": "CMake: Build"
+            "preLaunchTask": "CMake: Build (Debug)"
+        },
+        {
+            "name": "Debug SYCL Test (Release Build)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build-release/simple_sycl_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "CMake: Build (Release)"
         }
     ]
 }

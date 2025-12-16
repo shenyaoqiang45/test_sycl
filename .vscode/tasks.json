@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "CMake: Configure",
+            "label": "CMake: Configure (Debug)",
             "type": "shell",
             "command": "cmd.exe",
             "args": [
@@ -16,10 +16,27 @@
                 }
             },
             "problemMatcher": [],
-            "detail": "Configure CMake project with Ninja and icx compiler"
+            "detail": "Configure CMake project with Ninja and icx compiler (Debug)"
         },
         {
-            "label": "CMake: Build",
+            "label": "CMake: Configure (Release)",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "\"\"C:/Program Files (x86)/Intel/oneAPI/setvars.bat\" && cmake -B ${workspaceFolder}/build-release -G \"Ninja\" -DCMAKE_CXX_COMPILER=icx -DCMAKE_BUILD_TYPE=Release\""
+            ],
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/d", "/c"]
+                }
+            },
+            "problemMatcher": [],
+            "detail": "Configure CMake project with Ninja and icx compiler (Release)"
+        },
+        {
+            "label": "CMake: Build (Debug)",
             "type": "shell",
             "command": "cmd.exe",
             "args": [
@@ -40,8 +57,33 @@
                 "$msCompile",
                 "$gcc"
             ],
-            "detail": "Build the CMake project",
-            "dependsOn": ["CMake: Configure"]
+            "detail": "Build the CMake project (Debug)",
+            "dependsOn": ["CMake: Configure (Debug)"]
+        },
+        {
+            "label": "CMake: Build (Release)",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "\"\"C:/Program Files (x86)/Intel/oneAPI/setvars.bat\" && cmake --build ${workspaceFolder}/build-release --config Release\""
+            ],
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/d", "/c"]
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$msCompile",
+                "$gcc"
+            ],
+            "detail": "Build the CMake project (Release)",
+            "dependsOn": ["CMake: Configure (Release)"]
         },
         {
             "label": "CMake: Clean",
@@ -49,21 +91,32 @@
             "command": "cmd.exe",
             "args": [
                 "/c",
-                "if exist ${workspaceFolder}\\build rmdir /s /q ${workspaceFolder}\\build"
+                "if exist ${workspaceFolder}\\build rmdir /s /q ${workspaceFolder}\\build && if exist ${workspaceFolder}\\build-release rmdir /s /q ${workspaceFolder}\\build-release"
             ],
             "problemMatcher": [],
-            "detail": "Clean the build directory"
+            "detail": "Clean all build directories"
         },
         {
-            "label": "CMake: Rebuild",
+            "label": "CMake: Rebuild (Debug)",
             "type": "shell",
             "dependsOrder": "sequence",
             "dependsOn": [
                 "CMake: Clean",
-                "CMake: Build"
+                "CMake: Build (Debug)"
             ],
             "problemMatcher": [],
-            "detail": "Clean and rebuild the project"
+            "detail": "Clean and rebuild the project (Debug)"
+        },
+        {
+            "label": "CMake: Rebuild (Release)",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "CMake: Clean",
+                "CMake: Build (Release)"
+            ],
+            "problemMatcher": [],
+            "detail": "Clean and rebuild the project (Release)"
         }
     ]
 }
